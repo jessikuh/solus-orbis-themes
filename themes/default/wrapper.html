@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[% SITE_NAME %] - [% PAGE_TITLE %]</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+  [% CSS %]
+</head>
+
+<body>
+  <header class="bg-white border-b border-neutral-300 py-4 fixed w-full h-[80px]">
+    <div class="container flex">
+      <nav class="w-3/4 flex items-center">
+        <ol class="flex gap-x-8 items-center">
+          <li class="text-purple font-semibold text-lg text-ellipsis overflow-hidden">
+            <a href="/">[% SITE_NAME %]</a>
+          </li>
+          <li>
+            <a href="[% USERS_URL %]" class="font-semibold text-pink hover:text-pink-light text-xxs uppercase">
+              Users
+            </a>
+          </li>
+          [% IF:HAS_ADMIN %]
+          <li>
+            <a href="[% ADMIN_URL %]" class="font-semibold text-pink hover:text-pink-light text-xxs uppercase">
+              Admin
+            </a>
+          </li>
+          [% ENDIF %]
+        </ol>
+      </nav>
+      <nav class="w-1/4">
+        <ol class="flex justify-end items-center gap-x-4">
+          [% IF:LOGGED_IN %]
+          <li>
+            <a href="" title="Messages" class="no-underline text-pink hover:text-pink-light">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="" title="Switch user" class="no-underline text-pink hover:text-pink-light">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a href="[% LOGOUT_URL %]" title="Logout" class="no-underline text-pink hover:text-pink-light">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+              </svg>
+            </a>
+          </li>
+          [% ELSE %]
+          <li>
+            <a href="[% LOGIN_URL %]" class="font-semibold text-pink hover:text-pink-light text-xxs uppercase">Log
+              in</a>
+          </li>
+          <li>
+            <a href="[% SIGN_UP_URL %]" class="font-semibold text-pink hover:text-pink-light text-xxs uppercase">Sign
+              up</a>
+          </li>
+          [% ENDIF %]
+          <li>
+            <a href="" class="flex justify-end items-end no-underline">
+              <div class="font-semibold text-right text-sm mr-2">
+                <p class="text-xxs">ACTIVE AS:</p>
+                <p class="text-yellow text-ellipsis">
+                  [% IF:LOGGED_IN %] [% ACTIVE_USER_USERNAME %] [% ELSE %] [%
+                  GUEST_NAME %] [% ENDIF %]
+                </p>
+              </div>
+              <div class="h-[50px] w-[50px]">
+                <img
+                  src="[% IF:ACTIVE_USER_AVATAR %][% ACTIVE_USER_AVATAR %][% ELSE %][% SITE_DEFAULT_AVATAR %][% ENDIF %]"
+                  class="h-full w-full object-cover object-center rounded-full" data-object-fit="cover" />
+              </div>
+            </a>
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </header>
+  <main class="pt-[80px]">
+    <div class="container">
+      [% IF:ERROR_MESSAGES %]
+      <ul>
+        [% START:ERROR_MESSAGES %]
+        <li>[% ERROR_MESSAGE %]</li>
+        [% STOP:ERROR_MESSAGES %]
+      </ul>
+      [% ENDIF:ERROR_MESSAGES %]
+      [% IF:SUCCESS_MESSAGES %]
+      <ul>
+        [% START:SUCCESS_MESSAGES %]
+        <li>[% SUCCESS_MESSAGE %]</li>
+        [% STOP:SUCCESS_MESSAGES %]
+      </ul>
+      [% ENDIF:SUCCESS_MESSAGES %]
+
+      [% IF:GUEST %]
+      [% LOGIN_FORM %]
+      <div>
+        Email
+        [% FORM_FIELD:LOGIN:EMAIL %]
+      </div>
+      <div>
+        Password
+        [% FORM_FIELD:LOGIN:PASSWORD %]
+      </div>
+      [% FORM_FIELD:LOGIN:SUBMIT %]
+      [% /LOGIN_FORM %]
+      [% ENDIF %]
+    </div>
+
+    [% CONTENT %]
+  </main>
+</body>
+</html>
